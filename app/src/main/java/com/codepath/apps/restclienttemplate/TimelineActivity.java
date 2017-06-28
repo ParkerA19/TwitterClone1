@@ -16,6 +16,7 @@
  import org.json.JSONArray;
  import org.json.JSONException;
  import org.json.JSONObject;
+ import org.parceler.Parcels;
 
  import java.util.ArrayList;
 
@@ -122,17 +123,21 @@
 
      @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-         Tweet tweet = data.getParcelableExtra("Tweet");
-         tweets.add(0, tweet);
-         tweetAdapter.notifyItemInserted(0);
-         rvTweets.scrollToPosition(0);
+
+    //     if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+             data.toString();
+             Tweet tweet = (Tweet) Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
+             tweets.add(0, tweet);
+             tweetAdapter.notifyItemInserted(0);
+             rvTweets.scrollToPosition(0);
+       //  }
      }
 
      private void composeMessage(){
       //   Toast.makeText(this, "ComposeMessage", Toast.LENGTH_SHORT).show();
 
          // create an intent for the new activity
-         Intent intent = new Intent(this, ComposeActivity.class);
+         Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
          //
          startActivityForResult(intent, REQUEST_CODE);
      }

@@ -31,18 +31,21 @@ public class ComposeActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient();
 
         // set the edit text TODO: use ButterKnife
-        EditText etTweet = (EditText) findViewById(R.id.etTweet);
+        etTweet = (EditText) findViewById(R.id.etTweet);
+
     }
 
     public void onTweet(View v) {
-        String message = etTweet.toString();
+        // get the text from the edit text
+        String message = etTweet.getText().toString();
 
         client.sendTweet(message, new JsonHttpResponseHandler() {
                     @Override
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             Tweet tweet = Tweet.fromJSON(response);
-                            Intent intent = new Intent();
+                            System.out.println(tweet.toString());
+                            Intent intent = new Intent(ComposeActivity.this, TimelineActivity.class);
                             intent.putExtra(Tweet.class.getName(), Parcels.wrap(tweet));
                             setResult(RESULT_OK, intent);
                             finish();
