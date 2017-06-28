@@ -124,13 +124,12 @@
      @Override
      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-    //     if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-             data.toString();
-             Tweet tweet = (Tweet) Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
+         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+             Tweet tweet = Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
              tweets.add(0, tweet);
              tweetAdapter.notifyItemInserted(0);
              rvTweets.scrollToPosition(0);
-       //  }
+         }
      }
 
      private void composeMessage(){

@@ -34,11 +34,4 @@ public class Tweet {
         return tweet;
     }
 
-    public String toString() {
-        String b = this.body.toString();
-        String u = this.user.toString();
-        String c = this.createdAt.toString();
-        String t = this.time.toString();
-        return b + u + c+ t;
-    }
 }

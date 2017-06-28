@@ -19,13 +19,16 @@ import java.util.Locale;
 public class TimeFormatter {
     public static String getTimeDifference(String rawJsonDate) {
         String time = "";
+        String end = " ago";
         String twitterFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy";
         SimpleDateFormat format = new SimpleDateFormat(twitterFormat, Locale.ENGLISH);
         format.setLenient(true);
         try {
             long diff = (System.currentTimeMillis() - format.parse(rawJsonDate).getTime()) / 1000;
-            if (diff < 5)
+            if (diff < 5) {
                 time = "Just now";
+                end = "";
+            }
             else if (diff < 60)
                 time = String.format(Locale.ENGLISH, "%ds",diff);
             else if (diff < 60 * 60)
@@ -50,7 +53,7 @@ public class TimeFormatter {
         }  catch (ParseException e) {
             e.printStackTrace();
         }
-        return time + " ago";
+        return time + end;
     }
 
     /**

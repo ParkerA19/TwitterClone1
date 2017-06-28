@@ -1,11 +1,15 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -21,6 +25,7 @@ public class ComposeActivity extends AppCompatActivity {
     // instance variables
     TwitterClient client;
     EditText etTweet;
+    TextView tvCharacterCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +37,9 @@ public class ComposeActivity extends AppCompatActivity {
 
         // set the edit text TODO: use ButterKnife
         etTweet = (EditText) findViewById(R.id.etTweet);
+        tvCharacterCount = (TextView) findViewById(R.id.tvCharacterCount);
+
+        updateCharacterCount();
 
     }
 
@@ -44,7 +52,6 @@ public class ComposeActivity extends AppCompatActivity {
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         try {
                             Tweet tweet = Tweet.fromJSON(response);
-                            System.out.println(tweet.toString());
                             Intent intent = new Intent(ComposeActivity.this, TimelineActivity.class);
                             intent.putExtra(Tweet.class.getName(), Parcels.wrap(tweet));
                             setResult(RESULT_OK, intent);
@@ -62,6 +69,38 @@ public class ComposeActivity extends AppCompatActivity {
                 }
 
         );
+
+    }
+
+    public void updateCharacterCount() {
+        final TextWatcher mTextEditorWatcher = new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int used = s.length();
+                int available = 140 - used;
+                if (available >= 20)
+                    tvCharacterCount.setTextColor(Color.GRAY);
+                else if (available < 20)
+                    tvCharacterCount.setTextColor(Color.RED);
+                else if (available < 0) {
+                    // TODO: make the button unclickable
+                    // TODO: remove the max length in the xml file for the edit text
+                }
+
+
+                //This sets a textview to the current length
+                tvCharacterCount.setText(String.valueOf(available));
+            }
+
+            public void afterTextChanged(Editable s) {
+            }
+        };
+
+        etTweet.addTextChangedListener(mTextEditorWatcher);
+
+
 
     }
 }

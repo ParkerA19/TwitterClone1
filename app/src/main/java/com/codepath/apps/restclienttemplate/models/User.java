@@ -31,12 +31,4 @@ public class User {
 
         return user;
     }
-
-    public String toString() {
-        String n = this.name.toString();
-        String o = this.screenName.toString();
-        String p = this.profileImageUrl.toString();
-        return n + o + p;
-    }
-
 }
