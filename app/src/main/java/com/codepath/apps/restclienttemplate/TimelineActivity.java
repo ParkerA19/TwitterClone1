@@ -1,10 +1,14 @@
  package com.codepath.apps.restclienttemplate;
 
+ import android.content.Intent;
  import android.os.Bundle;
  import android.support.v7.app.AppCompatActivity;
  import android.support.v7.widget.LinearLayoutManager;
  import android.support.v7.widget.RecyclerView;
  import android.util.Log;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.widget.Toast;
 
  import com.codepath.apps.restclienttemplate.models.Tweet;
  import com.loopj.android.http.JsonHttpResponseHandler;
@@ -24,8 +28,15 @@
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
 
+    static final int REQUEST_CODE = 1;
 
-    @Override
+     @Override
+     public boolean onCreateOptionsMenu(Menu menu) {
+         getMenuInflater().inflate(R.menu.timeline, menu);
+         return true;
+     }
+
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
@@ -93,4 +104,41 @@
             }
         });
     }
+
+     @Override
+     public boolean onOptionsItemSelected(MenuItem item) {
+         // Handle presses on the action bar items
+         switch (item.getItemId()) {
+             case R.id.miCompose:
+                 composeMessage();
+                 return true;
+             case R.id.miProfile:
+                 showProfileView();
+                 return true;
+             default:
+                 return super.onOptionsItemSelected(item);
+         }
+     }
+
+     @Override
+     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+         Tweet tweet = data.getParcelableExtra("Tweet");
+         tweets.add(0, tweet);
+         tweetAdapter.notifyItemInserted(0);
+         rvTweets.scrollToPosition(0);
+     }
+
+     private void composeMessage(){
+      //   Toast.makeText(this, "ComposeMessage", Toast.LENGTH_SHORT).show();
+
+         // create an intent for the new activity
+         Intent intent = new Intent(this, ComposeActivity.class);
+         //
+         startActivityForResult(intent, REQUEST_CODE);
+     }
+
+     private void showProfileView() {
+         Toast.makeText(this, "showProfileView", Toast.LENGTH_SHORT).show();
+
+     }
 }
