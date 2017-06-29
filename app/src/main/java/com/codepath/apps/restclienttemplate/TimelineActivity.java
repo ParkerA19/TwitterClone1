@@ -2,6 +2,7 @@
 
  import android.content.Intent;
  import android.os.Bundle;
+ import android.support.v4.view.MenuItemCompat;
  import android.support.v4.widget.SwipeRefreshLayout;
  import android.support.v7.app.AppCompatActivity;
  import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +10,7 @@
  import android.util.Log;
  import android.view.Menu;
  import android.view.MenuItem;
+ import android.widget.ProgressBar;
  import android.widget.Toast;
 
  import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -32,12 +34,18 @@
 
      private SwipeRefreshLayout swipeContainer;
 
+     // Instance of the progress action-view
+     MenuItem miActionProgressItem;
+
+
      static final int REQUEST_CODE = 1;
 
      @Override
      public boolean onCreateOptionsMenu(Menu menu) {
          getMenuInflater().inflate(R.menu.timeline, menu);
          return true;
+
+
      }
 
      @Override
@@ -58,7 +66,7 @@
          // set the adapter
          rvTweets.setAdapter(tweetAdapter);
 
-         populateTimeline();
+   //      populateTimeline();
 
          swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
          // Setup refresh listener which triggers new data loading
@@ -79,7 +87,33 @@
 
      }
 
+     @Override
+     public boolean onPrepareOptionsMenu(Menu menu) {
+         // Store instance of the menu item containing progress
+         miActionProgressItem = menu.findItem(R.id.miActionProgress);
+         // Extract the action-view from the menu item
+         ProgressBar v =  (ProgressBar) MenuItemCompat.getActionView(miActionProgressItem);
+         // Return to finish
+
+         populateTimeline();
+
+         return super.onPrepareOptionsMenu(menu);
+     }
+
+     public void showProgressBar() {
+         // Show progress item
+         miActionProgressItem.setVisible(true);
+     }
+
+     public void hideProgressBar() {
+         // Hide progress item
+         miActionProgressItem.setVisible(false);
+     }
+
      public void populateTimeLineHelper(JSONArray response) {
+         // iterate through the JSON array
+         // for each entry, deserialize the JSON object
+
          for (int i = 0; i < response.length(); i++) {
              // convert each object to a Tweet model
              // add that Tweet model to our data source
@@ -96,6 +130,8 @@
 
 
      private void populateTimeline() {
+         // when we are populating the timeline we want the progress bar to show
+         showProgressBar();
          client.getHomeTimeline(new JsonHttpResponseHandler() {
              @Override
              public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -105,13 +141,17 @@
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
              //   Log.d("TwitterClient", response.toString());
-                // iterate through the JSON array
-                // for each entry, deserialize the JSON object
+                // clear the adapter
                 tweetAdapter.clear();
 
+                // add the new tweets
                 populateTimeLineHelper(response);
 
+                // refresh
                 swipeContainer.setRefreshing(false);
+
+                // once we finish the progress bar can go away
+                hideProgressBar();
              }
 
              @Override

@@ -39,6 +39,9 @@ public class ComposeActivity extends AppCompatActivity {
         etTweet = (EditText) findViewById(R.id.etTweet);
         tvCharacterCount = (TextView) findViewById(R.id.tvCharacterCount);
 
+        int characters = 140;
+        tvCharacterCount.setText(String.valueOf(characters));
+
         updateCharacterCount();
 
     }

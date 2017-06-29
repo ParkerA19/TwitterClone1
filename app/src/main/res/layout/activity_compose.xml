@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:hint="What's happening?"
         android:layout_above="@+id/bTweet"
-        android:maxLength="140"
+      
         android:layout_alignParentStart="true">
     </EditText>
 

@@ -36,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:layout_marginBottom="5dp"
         android:text="TextView"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/tvScreenName" />
@@ -48,4 +49,14 @@
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/tvUserName"
         android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/ivLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/ivProfileImage"
+        app:srcCompat="@color/inline_action"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
