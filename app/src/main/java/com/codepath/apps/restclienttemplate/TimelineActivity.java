@@ -79,27 +79,6 @@
 
      }
 
-     public void fetchTimelineAsync(int page) {
-         // Send the network request to fetch the updated data
-         // `client` here is an instance of Android Async HTTP
-         // getHomeTimeline is an example endpoint.
-
-         client.getHomeTimeline(new JsonHttpResponseHandler() {
-             public void onSuccess(JSONArray json) {
-                 // Remember to CLEAR OUT old items before appending in the new ones
-                 tweetAdapter.clear();
-                 // ...the data has come back, add new items to your adapter...
-                 populateTimeLineHelper(json);
-                 // Now we call setRefreshing(false) to signal refresh has finished
-                 swipeContainer.setRefreshing(false);
-             }
-
-             public void onFailure(Throwable e) {
-                 Log.d("DEBUG", "Fetch timeline error: " + e.toString());
-             }
-         });
-     }
-
      public void populateTimeLineHelper(JSONArray response) {
          for (int i = 0; i < response.length(); i++) {
              // convert each object to a Tweet model
@@ -130,7 +109,7 @@
                 // for each entry, deserialize the JSON object
                 tweetAdapter.clear();
 
-                 populateTimeLineHelper(response);
+                populateTimeLineHelper(response);
 
                 swipeContainer.setRefreshing(false);
              }
@@ -181,9 +160,7 @@
           }
       }
 
-      private void composeMessage(){
-          //   Toast.makeText(this, "ComposeMessage", Toast.LENGTH_SHORT).show();
-
+      private void composeMessage() {
           // create an intent for the new activity
           Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
           //

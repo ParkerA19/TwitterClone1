@@ -103,4 +103,10 @@ public class ComposeActivity extends AppCompatActivity {
 
 
     }
+
+    public void close(View V) {
+        Intent intent = new Intent(ComposeActivity.this, TimelineActivity.class);
+        startActivity(intent);
+    }
+
 }

@@ -51,6 +51,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
         // populate the views according to position
         holder.tvUsername.setText(tweet.user.name);
+        holder.tvScreenName.setText("@" + tweet.user.screenName);
         holder.tvBody.setText(tweet.body);
         holder.tvTime.setText(tweet.time);
 
@@ -71,6 +72,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvUsername;
         public TextView tvBody;
         public TextView tvTime;
+        public TextView tvScreenName;
 
         public ViewHolder (View itemView) {
             super(itemView);
@@ -81,6 +83,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
+            tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
         }
     }
 
