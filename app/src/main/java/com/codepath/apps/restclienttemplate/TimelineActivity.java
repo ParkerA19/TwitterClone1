@@ -2,6 +2,7 @@
 
  import android.content.Intent;
  import android.os.Bundle;
+ import android.support.v4.widget.SwipeRefreshLayout;
  import android.support.v7.app.AppCompatActivity;
  import android.support.v7.widget.LinearLayoutManager;
  import android.support.v7.widget.RecyclerView;
@@ -24,12 +25,14 @@
 
  public class TimelineActivity extends AppCompatActivity {
 
-    TwitterClient client;
-    TweetAdapter tweetAdapter;
-    ArrayList<Tweet> tweets;
-    RecyclerView rvTweets;
+     TwitterClient client;
+     TweetAdapter tweetAdapter;
+     ArrayList<Tweet> tweets;
+     RecyclerView rvTweets;
 
-    static final int REQUEST_CODE = 1;
+     private SwipeRefreshLayout swipeContainer;
+
+     static final int REQUEST_CODE = 1;
 
      @Override
      public boolean onCreateOptionsMenu(Menu menu) {
@@ -38,111 +41,159 @@
      }
 
      @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_timeline);
-        client = TwitterApp.getRestClient();
-        // TODO: ButterKnife
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_timeline);
+         client = TwitterApp.getRestClient();
+         // TODO: ButterKnife
 
-        // find the RecyclerView
-        rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
-        // init the arraylist (data source)
-        tweets = new ArrayList<>();
-        // construct the adapter from this data source
-        tweetAdapter = new TweetAdapter(tweets);
-        // RecyclerView setup (layout manager, use adapter)
-        rvTweets.setLayoutManager(new LinearLayoutManager(this));
-        // set the adapter
-        rvTweets.setAdapter(tweetAdapter);
+         // find the RecyclerView
+         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
+         // init the arraylist (data source)
+         tweets = new ArrayList<>();
+         // construct the adapter from this data source
+         tweetAdapter = new TweetAdapter(tweets);
+         // RecyclerView setup (layout manager, use adapter)
+         rvTweets.setLayoutManager(new LinearLayoutManager(this));
+         // set the adapter
+         rvTweets.setAdapter(tweetAdapter);
 
-        populateTimeline();
-    }
+         populateTimeline();
 
-    private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("TwitterClient", response.toString());
-            }
+         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
+         // Setup refresh listener which triggers new data loading
+         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+             @Override
+             public void onRefresh() {
+                 // Your code to refresh the list here.
+                 // Make sure you call swipeContainer.setRefreshing(false)
+                 // once the network request has completed successfully.
+                 populateTimeline();
+             }
+         });
+         // Configure the refreshing colors
+         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                 android.R.color.holo_green_light,
+                 android.R.color.holo_orange_light,
+                 android.R.color.holo_red_light);
+
+     }
+
+     public void fetchTimelineAsync(int page) {
+         // Send the network request to fetch the updated data
+         // `client` here is an instance of Android Async HTTP
+         // getHomeTimeline is an example endpoint.
+
+         client.getHomeTimeline(new JsonHttpResponseHandler() {
+             public void onSuccess(JSONArray json) {
+                 // Remember to CLEAR OUT old items before appending in the new ones
+                 tweetAdapter.clear();
+                 // ...the data has come back, add new items to your adapter...
+                 populateTimeLineHelper(json);
+                 // Now we call setRefreshing(false) to signal refresh has finished
+                 swipeContainer.setRefreshing(false);
+             }
+
+             public void onFailure(Throwable e) {
+                 Log.d("DEBUG", "Fetch timeline error: " + e.toString());
+             }
+         });
+     }
+
+     public void populateTimeLineHelper(JSONArray response) {
+         for (int i = 0; i < response.length(); i++) {
+             // convert each object to a Tweet model
+             // add that Tweet model to our data source
+             // notify the adapter that we've added an item
+             try {
+                 Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
+                 tweets.add(tweet);
+                 tweetAdapter.notifyItemInserted(tweets.size() - 1);
+             } catch (JSONException e) {
+                 e.printStackTrace();
+             }
+         }
+     }
+
+
+     private void populateTimeline() {
+         client.getHomeTimeline(new JsonHttpResponseHandler() {
+             @Override
+             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                 Log.d("TwitterClient", response.toString());
+             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
              //   Log.d("TwitterClient", response.toString());
                 // iterate through the JSON array
                 // for each entry, deserialize the JSON object
+                tweetAdapter.clear();
 
-                for (int i = 0; i < response.length(); i++) {
-                    // convert each object to a Tweet model
-                    // add that Tweet model to our data source
-                    // notify the adapter that we've added an item
-                    try {
-                        Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
-                        tweets.add(tweet);
-                        tweetAdapter.notifyItemInserted(tweets.size() - 1);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                 populateTimeLineHelper(response);
 
-            }
+                swipeContainer.setRefreshing(false);
+             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("TwitterClient", responseString);
-                throwable.printStackTrace();
-            }
+             @Override
+             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                 Log.d("TwitterClient", responseString);
+                 throwable.printStackTrace();
+             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("TwitterClient", errorResponse.toString());
-                throwable.printStackTrace();
-            }
+             @Override
+             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                 Log.d("TwitterClient", errorResponse.toString());
+                 throwable.printStackTrace();
+             }
 
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("TwitterClient", errorResponse.toString());
-                throwable.printStackTrace();
-            }
-        });
-    }
-
-     @Override
-     public boolean onOptionsItemSelected(MenuItem item) {
-         // Handle presses on the action bar items
-         switch (item.getItemId()) {
-             case R.id.miCompose:
-                 composeMessage();
-                 return true;
-             case R.id.miProfile:
-                 showProfileView();
-                 return true;
-             default:
-                 return super.onOptionsItemSelected(item);
-         }
+             @Override
+             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                 Log.d("TwitterClient", errorResponse.toString());
+                 throwable.printStackTrace();
+             }
+         });
      }
 
-     @Override
-     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+      @Override
+      public boolean onOptionsItemSelected(MenuItem item) {
+          // Handle presses on the action bar items
+          switch (item.getItemId()) {
+              case R.id.miCompose:
+                  composeMessage();
+                  return true;
+              case R.id.miProfile:
+                  showProfileView();
+                  return true;
+              default:
+                  return super.onOptionsItemSelected(item);
+          }
+      }
 
-         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-             Tweet tweet = Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
-             tweets.add(0, tweet);
-             tweetAdapter.notifyItemInserted(0);
-             rvTweets.scrollToPosition(0);
-         }
-     }
+      @Override
+      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-     private void composeMessage(){
-      //   Toast.makeText(this, "ComposeMessage", Toast.LENGTH_SHORT).show();
+          if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+              Tweet tweet = Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
+              tweets.add(0, tweet);
+              tweetAdapter.notifyItemInserted(0);
+              rvTweets.scrollToPosition(0);
+          }
+      }
 
-         // create an intent for the new activity
-         Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
-         //
-         startActivityForResult(intent, REQUEST_CODE);
-     }
+      private void composeMessage(){
+          //   Toast.makeText(this, "ComposeMessage", Toast.LENGTH_SHORT).show();
 
-     private void showProfileView() {
-         Toast.makeText(this, "showProfileView", Toast.LENGTH_SHORT).show();
+          // create an intent for the new activity
+          Intent intent = new Intent(TimelineActivity.this, ComposeActivity.class);
+          //
+          startActivityForResult(intent, REQUEST_CODE);
+      }
 
-     }
-}
+      private void showProfileView() {
+          Toast.makeText(this, "showProfileView", Toast.LENGTH_SHORT).show();
+
+      }
+
+
+ }

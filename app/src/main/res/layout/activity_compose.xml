@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:onClick="onTweet"
         android:text="Tweet"
-        android:background="@color/colorLogin"
+        android:background="@color/twitter_blue"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 
