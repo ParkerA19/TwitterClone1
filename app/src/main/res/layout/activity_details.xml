@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/ivProfileImage"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="10dp"
         android:layout_alignParentStart="true"
@@ -25,30 +25,36 @@
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textAppearance="@android:style/TextAppearance.Large" />
 
     <TextView
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/tvUserName"
+        android:layout_marginLeft="10dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:text="TextView"
         android:layout_below="@+id/tvUserName"
-        android:text="TextView" />
+        android:layout_toEndOf="@+id/ivProfileImage" />
 
     <TextView
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignStart="@+id/ivProfileImage"
         android:layout_below="@+id/ivProfileImage"
         android:text="TextView"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginBottom="5dp"
+        android:textAppearance="@android:style/TextAppearance.Large" />
 
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/tvBody"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:layout_below="@+id/tvBody"
         android:text="TextView" />
 </RelativeLayout>

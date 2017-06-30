@@ -18,6 +18,9 @@ public class Tweet {
     public User user;
     public String createdAt;
     public String time;
+    public String image;
+ //   public JSONObject entities;
+//    public JSONArray media;
 
     // deserialize the JSON
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
@@ -31,6 +34,9 @@ public class Tweet {
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.time = TimeFormatter.getTimeDifference(tweet.createdAt);
     //    tweet.time = TimeFormatter.getTimeStamp(tweet.createdAt);
+//        tweet.entities = jsonObject.getJSONObject("entities");
+//        tweet.media = tweet.entities.getJSONArray("media");
+//        tweet.image = tweet.media.getJSONObject(0).getString("media_url_https");
 
         return tweet;
     }

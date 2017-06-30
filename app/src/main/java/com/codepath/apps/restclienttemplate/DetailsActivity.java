@@ -47,7 +47,7 @@ public class DetailsActivity extends AppCompatActivity {
         // set the title and overview
         tvBody.setText(tweet.body);
         tvDate.setText(tweet.createdAt);
-        tvScreenName.setText(tweet.user.screenName);
+        tvScreenName.setText("@" + tweet.user.screenName);
         tvUserName.setText(tweet.user.name);
 
         // ivTrailer -- set the backdrop image

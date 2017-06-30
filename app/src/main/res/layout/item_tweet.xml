@@ -60,6 +60,7 @@
         android:paddingBottom="30dp"
         android:layout_below="@+id/tvUserName"
         android:layout_toEndOf="@+id/ivProfileImage"
+        android:layout_marginBottom="10dp"
         android:text="TextView"
         android:textColor="@color/black" />
 
@@ -76,49 +77,49 @@
 
     <ImageButton
         android:id="@+id/ibComment"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_above="@+id/ivLine"
         android:layout_alignStart="@+id/tvBody"
-        android:paddingBottom="5dp"
         android:layout_marginBottom="5dp"
         android:backgroundTint="@color/white"
+        android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_compose_dm" />
 
     <ImageButton
         android:id="@+id/ibRetweet"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_above="@+id/ivLine"
-        android:layout_toEndOf="@+id/ibComment"
-        android:paddingBottom="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@+id/ibComment"
         android:backgroundTint="@color/white"
+        android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
     <ImageButton
         android:id="@+id/ibLike"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignBottom="@+id/ivLine"
-        android:layout_toEndOf="@+id/ibRetweet"
-        android:paddingBottom="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@+id/ibRetweet"
         android:backgroundTint="@color/white"
+        android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_heart_stroke" />
 
     <ImageButton
         android:id="@+id/ibMessage"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_above="@+id/ivLine"
-        android:layout_toEndOf="@+id/ibLike"
-        android:paddingBottom="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginLeft="20dp"
+        android:layout_toEndOf="@+id/ibLike"
         android:backgroundTint="@color/white"
+        android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_messages_stroke" />
 
 </RelativeLayout>

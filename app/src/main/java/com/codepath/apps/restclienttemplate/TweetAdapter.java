@@ -7,8 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -62,6 +64,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvScreenName.setText("@" + tweet.user.screenName);
         holder.tvBody.setText(tweet.body);
         holder.tvTime.setText(tweet.time);
+        holder.ibLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "showProfileView", Toast.LENGTH_SHORT).show();
+            }
+        });
+//
 
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
@@ -88,6 +97,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         @BindView(R.id.tvBody) TextView tvBody;
         @BindView(R.id.tvTime) TextView tvTime;
         @BindView(R.id.tvScreenName) TextView tvScreenName;
+        @BindView(R.id.ibComment) ImageButton ibComment;
+        @BindView(R.id.ibLike) ImageButton ibLike;
+        @BindView(R.id.ibRetweet) ImageButton ibRetweet;
+        @BindView(R.id.ibMessage) ImageButton ibMessage;
 
         public ViewHolder (View itemView) {
             super(itemView);
