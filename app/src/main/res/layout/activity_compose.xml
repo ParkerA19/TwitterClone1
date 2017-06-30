@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="What's happening?"
-        android:layout_above="@+id/bTweet"
-      
+
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true">
     </EditText>
 
@@ -23,16 +23,16 @@
         android:onClick="onTweet"
         android:text="Tweet"
         android:background="@color/twitter_blue"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@+id/etTweet"
         android:layout_alignParentEnd="true" />
 
     <TextView
         android:id="@+id/tvCharacterCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="TextView" />
+        android:text="TextView"
+        android:layout_above="@+id/etTweet"
+        android:layout_alignParentStart="true" />
 
     <ImageButton
         android:id="@+id/ibClose"

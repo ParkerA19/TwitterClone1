@@ -10,6 +10,7 @@
  import android.util.Log;
  import android.view.Menu;
  import android.view.MenuItem;
+ import android.view.View;
  import android.widget.ProgressBar;
  import android.widget.Toast;
 
@@ -109,6 +110,7 @@
          // Hide progress item
          miActionProgressItem.setVisible(false);
      }
+
 
      public void populateTimeLineHelper(JSONArray response) {
          // iterate through the JSON array
@@ -210,6 +212,10 @@
       private void showProfileView() {
           Toast.makeText(this, "showProfileView", Toast.LENGTH_SHORT).show();
 
+      }
+
+      public void onViewClick(View v) {
+          Toast.makeText(this, "go to tweet description", Toast.LENGTH_SHORT).show();
       }
 
 

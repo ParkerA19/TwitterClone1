@@ -1,6 +1,8 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +13,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
+import org.parceler.Parcels;
+
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 
@@ -23,7 +29,7 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> {
 
-    private List<Tweet> mTweets;
+    List<Tweet> mTweets;
     Context context;
 
     // pass in the Tweets array in the constructor
@@ -70,23 +76,53 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     // create ViewHolder class
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public ImageView ivProfileImage;
-        public TextView tvUsername;
-        public TextView tvBody;
-        public TextView tvTime;
-        public TextView tvScreenName;
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+//        public ImageView ivProfileImage;
+//        public TextView tvUsername;
+//        public TextView tvBody;
+//        public TextView tvTime;
+//        public TextView tvScreenName;
+
+        @Nullable@BindView(R.id.ivProfileImage) ImageView ivProfileImage;
+        @BindView(R.id.tvUserName) TextView tvUsername;
+        @BindView(R.id.tvBody) TextView tvBody;
+        @BindView(R.id.tvTime) TextView tvTime;
+        @BindView(R.id.tvScreenName) TextView tvScreenName;
 
         public ViewHolder (View itemView) {
             super(itemView);
 
+            // bind with butterknife
+            ButterKnife.bind(this, itemView);
+
+            // set onClickListener
+            itemView.setOnClickListener(this);
+
             // perform findViewById lookups
 
-            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
-            tvBody = (TextView) itemView.findViewById(R.id.tvBody);
-            tvTime = (TextView) itemView.findViewById(R.id.tvTime);
-            tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
+//            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
+//            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
+//            tvBody = (TextView) itemView.findViewById(R.id.tvBody);
+//            tvTime = (TextView) itemView.findViewById(R.id.tvTime);
+//            tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
+        }
+
+        @Override
+        public void onClick(View v) {
+            // get item position
+            int position = getAdapterPosition();
+            //make sure the position is valid
+            if (position != RecyclerView.NO_POSITION) {
+                // get the tweet and the position
+                Tweet tweet = mTweets.get(position);
+                // create intent for the new activity
+                Intent intent = new Intent(context, DetailsActivity.class);
+                // serialize the movie using parceler, use its short name as a key
+                intent.putExtra(Tweet.class.getSimpleName(), Parcels.wrap(tweet));
+                // show the activity
+                context.startActivity(intent);
+            }
+
         }
     }
 
