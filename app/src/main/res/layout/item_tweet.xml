@@ -8,6 +8,8 @@
         android:id="@+id/ivProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="10dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         app:srcCompat="@android:color/black" />
@@ -17,46 +19,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="TextView"
+        android:paddingRight="5dp"
+        android:text="UserName"
+        android:textColor="@color/black"
         android:layout_alignParentTop="true"
+        android:textStyle="bold"
         android:layout_alignStart="@+id/tvBody" />
-
-    <TextView
-        android:id="@+id/tvBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/ivProfileImage"
-        android:layout_below="@+id/tvUserName"
-        android:layout_marginLeft="5dp"
-        android:layout_toEndOf="@+id/ivProfileImage"
-        android:text="TextView" />
 
     <TextView
         android:id="@+id/tvTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
         android:text="TextView"
-        android:layout_alignParentTop="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:layout_alignBaseline="@+id/tvScreenName"
+        android:layout_alignBottom="@+id/tvScreenName"
         android:layout_toEndOf="@+id/tvScreenName" />
 
     <TextView
         android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:text="TextView"
+        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:layout_marginLeft="5dp"
+        android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/tvUserName"
-        android:text="TextView" />
+         />
+
+    <TextView
+        android:id="@+id/tvBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="15dp"
+        android:layout_below="@+id/tvUserName"
+        android:layout_toEndOf="@+id/ivProfileImage"
+        android:text="TextView"
+        android:textColor="@color/black" />
 
     <ImageView
         android:id="@+id/ivLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/ivProfileImage"
+        android:layout_below="@+id/tvBody"
+        android:layout_alignParentEnd="true"
         app:srcCompat="@color/inline_action"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentEnd="true" />
+        android:paddingTop="5dp"
+        android:paddingBottom="2dp"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>
