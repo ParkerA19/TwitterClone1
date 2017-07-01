@@ -10,29 +10,29 @@
         android:id="@+id/etTweet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="What's happening?"
-
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true">
-    </EditText>
+
+        android:layout_alignParentStart="true"
+        android:hint="What's happening?"></EditText>
 
     <Button
         android:id="@+id/bTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onTweet"
-        android:text="Tweet"
-        android:background="@color/twitter_blue"
         android:layout_above="@+id/etTweet"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:background="@color/twitter_blue"
+        android:ellipsize="marquee"
+        android:onClick="onTweet"
+        android:text="Tweet" />
 
     <TextView
         android:id="@+id/tvCharacterCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:layout_above="@+id/etTweet"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="140" />
 
     <ImageButton
         android:id="@+id/ibClose"

@@ -19,15 +19,6 @@
 
     </item>
 
-
-    <item
-        android:id="@+id/twitterLogo"
-        android:icon="@drawable/ic_launcher_twitter_round"
-        app:showAsAction="always"
-        android:title="Icon">
-    </item>
-
-
     <item
         android:id="@+id/miCompose"
         android:icon="@drawable/ic_vector_compose"

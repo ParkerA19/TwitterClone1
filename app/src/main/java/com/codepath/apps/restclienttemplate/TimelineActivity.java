@@ -1,30 +1,29 @@
  package com.codepath.apps.restclienttemplate;
 
  import android.content.Intent;
- import android.os.Bundle;
- import android.support.v4.view.MenuItemCompat;
- import android.support.v4.widget.SwipeRefreshLayout;
- import android.support.v7.app.AppCompatActivity;
- import android.support.v7.widget.LinearLayoutManager;
- import android.support.v7.widget.RecyclerView;
- import android.util.Log;
- import android.view.Menu;
- import android.view.MenuItem;
- import android.view.View;
- import android.widget.ProgressBar;
- import android.widget.Toast;
+import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
- import com.codepath.apps.restclienttemplate.models.Tweet;
- import com.loopj.android.http.JsonHttpResponseHandler;
+import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
- import org.json.JSONArray;
- import org.json.JSONException;
- import org.json.JSONObject;
- import org.parceler.Parcels;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.parceler.Parcels;
 
- import java.util.ArrayList;
+import java.util.ArrayList;
 
- import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.Header;
 
  public class TimelineActivity extends AppCompatActivity {
 
@@ -66,8 +65,6 @@
          rvTweets.setLayoutManager(new LinearLayoutManager(this));
          // set the adapter
          rvTweets.setAdapter(tweetAdapter);
-
-   //      populateTimeline();
 
          swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
          // Setup refresh listener which triggers new data loading
@@ -212,10 +209,6 @@
       private void showProfileView() {
           Toast.makeText(this, "showProfileView", Toast.LENGTH_SHORT).show();
 
-      }
-
-      public void onViewClick(View v) {
-          Toast.makeText(this, "go to tweet description", Toast.LENGTH_SHORT).show();
       }
 
 

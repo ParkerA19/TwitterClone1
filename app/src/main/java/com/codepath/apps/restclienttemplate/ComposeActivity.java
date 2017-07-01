@@ -39,9 +39,6 @@ public class ComposeActivity extends AppCompatActivity {
         etTweet = (EditText) findViewById(R.id.etTweet);
         tvCharacterCount = (TextView) findViewById(R.id.tvCharacterCount);
 
-        int characters = 140;
-        tvCharacterCount.setText(String.valueOf(characters));
-
         updateCharacterCount();
 
     }
@@ -83,14 +80,11 @@ public class ComposeActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 int used = s.length();
                 int available = 140 - used;
-                if (available >= 20)
+                if (available >= 0)
                     tvCharacterCount.setTextColor(Color.GRAY);
-                else if (available < 20)
+                else if (available < 0)
                     tvCharacterCount.setTextColor(Color.RED);
-                else if (available < 0) {
-                    // TODO: make the button unclickable
-                    // TODO: remove the max length in the xml file for the edit text
-                }
+
 
 
                 //This sets a textview to the current length

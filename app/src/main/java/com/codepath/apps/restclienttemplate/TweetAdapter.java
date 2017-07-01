@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -22,7 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
-
 
 
 /**
@@ -67,7 +65,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.ibLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "showProfileView", Toast.LENGTH_SHORT).show();
+                // TODO: add a like and change the heart to red
             }
         });
 //
@@ -76,6 +74,14 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 .load(tweet.user.profileImageUrl)
                 .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
                 .into(holder.ivProfileImage);
+
+        if (tweet.imageUrl != null) {
+            Glide.with(context)
+                    .load(tweet.imageUrl)
+                    .bitmapTransform(new RoundedCornersTransformation(context, 5, 0))
+                    .into(holder.ivImage);
+        }
+
     }
 
     @Override
@@ -91,8 +97,13 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 //        public TextView tvBody;
 //        public TextView tvTime;
 //        public TextView tvScreenName;
+//        public ImageButton ibComment;
+//        public ImageButton ibLike;
+//        public ImageButton ibRetweet;
+//        public ImageButton ibMessage;
 
         @Nullable@BindView(R.id.ivProfileImage) ImageView ivProfileImage;
+        @Nullable@BindView(R.id.ivImage) ImageView ivImage;
         @BindView(R.id.tvUserName) TextView tvUsername;
         @BindView(R.id.tvBody) TextView tvBody;
         @BindView(R.id.tvTime) TextView tvTime;
@@ -112,6 +123,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             itemView.setOnClickListener(this);
 
             // perform findViewById lookups
+//
+//            ibComment = (ImageButton) itemView.findViewById(R.id.ibComment);
+//            ibLike = (ImageButton) itemView.findViewById(R.id.ibLike);
+//            ibRetweet = (ImageButton) itemView.findViewById(R.id.ibRetweet);
+//            ibMessage = (ImageButton) itemView.findViewById(R.id.ibMessage);
 
 //            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
 //            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);

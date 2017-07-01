@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcel;
@@ -18,9 +19,7 @@ public class Tweet {
     public User user;
     public String createdAt;
     public String time;
-    public String image;
- //   public JSONObject entities;
-//    public JSONArray media;
+    public String imageUrl;
 
     // deserialize the JSON
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
@@ -34,10 +33,20 @@ public class Tweet {
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         tweet.time = TimeFormatter.getTimeDifference(tweet.createdAt);
     //    tweet.time = TimeFormatter.getTimeStamp(tweet.createdAt);
-//        tweet.entities = jsonObject.getJSONObject("entities");
-//        tweet.media = tweet.entities.getJSONArray("media");
-//        tweet.image = tweet.media.getJSONObject(0).getString("media_url_https");
+        if (jsonObject.has("entities")) {
+            JSONObject object = jsonObject.getJSONObject("entities");
+            if (object.has("media")) {
+                JSONArray array = object.getJSONArray("media");
+                if (array.length() > 0) {
+                    JSONObject object2 = array.getJSONObject(0);
+                    if (object2.has("media_url_https")) {
+                        tweet.imageUrl = object2.getString("media_url_https");
+                    }
 
+                }
+            }
+
+        }
         return tweet;
     }
 
