@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -65,9 +66,35 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.ibLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(context, "TODO: Like", Toast.LENGTH_SHORT).show();
                 // TODO: add a like and change the heart to red
             }
         });
+
+        holder.ibComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "TODO: Comment", Toast.LENGTH_SHORT).show();
+                // TODO: add a comment ability
+            }
+        });
+
+        holder.ibRetweet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "TODO: Retweet", Toast.LENGTH_SHORT).show();
+                // TODO: add a Retweet ability
+            }
+        });
+
+        holder.ibMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(context, "TODO: Message", Toast.LENGTH_SHORT).show();
+                // TODO: add a DM ability
+            }
+        });
+
 //
 
         Glide.with(context)

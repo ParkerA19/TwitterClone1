@@ -207,7 +207,7 @@ import cz.msebera.android.httpclient.Header;
       }
 
       private void showProfileView() {
-          Toast.makeText(this, "showProfileView", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "TODO: ProfileView", Toast.LENGTH_SHORT).show();
 
       }
 
