@@ -1,5 +1,6 @@
 package com.codepath.apps.restclienttemplate;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
@@ -10,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -22,6 +22,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
+import static com.codepath.apps.restclienttemplate.R.drawable.ic_vector_heart;
+import static com.codepath.apps.restclienttemplate.R.drawable.ic_vector_heart_stroke;
+import static com.codepath.apps.restclienttemplate.R.drawable.ic_vector_retweet;
+import static com.codepath.apps.restclienttemplate.R.drawable.ic_vector_retweet_stroke;
 
 
 /**
@@ -40,6 +45,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     // for each row, inflate the layout and cache references into ViewHolder
 
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
@@ -54,46 +60,63 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     // bind the values based on the position of the element
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         // get the data according to position
-        Tweet tweet = mTweets.get(position);
+        final Tweet tweet = mTweets.get(position);
+        int favorite = (tweet.favorited) ? ic_vector_heart : ic_vector_heart_stroke;
+        int retweet = (tweet.retweeted) ? ic_vector_retweet : ic_vector_retweet_stroke;
 
         // populate the views according to position
         holder.tvUsername.setText(tweet.user.name);
         holder.tvScreenName.setText("@" + tweet.user.screenName);
         holder.tvBody.setText(tweet.body);
         holder.tvTime.setText(tweet.time);
+        holder.tvComment.setText("hey");
+        holder.tvRetweet.setText(tweet.retweetCount);
+        holder.tvLike.setText(tweet.favortieCount);
+        holder.tvMessage.setText("hi");
+        holder.ibLike.setImageResource(favorite);
+        holder.ibRetweet.setImageResource(retweet);
         holder.ibLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "TODO: Like", Toast.LENGTH_SHORT).show();
-                // TODO: add a like and change the heart to red
-            }
-        });
+                if (tweet.favorited) {
+                    tweet.favorited = false;
+                    // TODO; change color back to white
+                    holder.ibLike.setImageResource(ic_vector_heart_stroke);
 
-        holder.ibComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "TODO: Comment", Toast.LENGTH_SHORT).show();
-                // TODO: add a comment ability
-            }
-        });
 
-        holder.ibRetweet.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "TODO: Retweet", Toast.LENGTH_SHORT).show();
-                // TODO: add a Retweet ability
+                } else {
+                    tweet.favorited = true;
+                    // TODO; change color to red
+                    holder.ibLike.setImageResource(ic_vector_heart);
+                }
             }
         });
-
-        holder.ibMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "TODO: Message", Toast.LENGTH_SHORT).show();
-                // TODO: add a DM ability
-            }
-        });
+//
+//        holder.ibComment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, "TODO: Comment", Toast.LENGTH_SHORT).show();
+//                // TODO: add a comment ability
+//            }
+//        });
+//
+//        holder.ibRetweet.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, "TODO: Retweet", Toast.LENGTH_SHORT).show();
+//                // TODO: add a Retweet ability
+//            }
+//        });
+//
+//        holder.ibMessage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(context, "TODO: Message", Toast.LENGTH_SHORT).show();
+//                // TODO: add a DM ability
+//            }
+//        });
 
 //
 
@@ -136,9 +159,14 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         @BindView(R.id.tvTime) TextView tvTime;
         @BindView(R.id.tvScreenName) TextView tvScreenName;
         @BindView(R.id.ibComment) ImageButton ibComment;
-        @BindView(R.id.ibLike) ImageButton ibLike;
         @BindView(R.id.ibRetweet) ImageButton ibRetweet;
+        @BindView(R.id.ibLike) ImageButton ibLike;
         @BindView(R.id.ibMessage) ImageButton ibMessage;
+        @BindView(R.id.tvComment) TextView tvComment;
+        @BindView(R.id.tvRetweet) TextView tvRetweet;
+        @BindView(R.id.tvLike) TextView tvLike;
+        @BindView(R.id.tvMessage) TextView tvMessage;
+
 
         public ViewHolder (View itemView) {
             super(itemView);
@@ -150,9 +178,9 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             itemView.setOnClickListener(this);
 
             // perform findViewById lookups
-//
-//            ibComment = (ImageButton) itemView.findViewById(R.id.ibComment);
-//            ibLike = (ImageButton) itemView.findViewById(R.id.ibLike);
+
+//            ibComment = (int) itemView.findViewById(R.id.ibComment);
+//            ibLike = (int) itemView.findViewById(R.id.ibLike);
 //            ibRetweet = (ImageButton) itemView.findViewById(R.id.ibRetweet);
 //            ibMessage = (ImageButton) itemView.findViewById(R.id.ibMessage);
 

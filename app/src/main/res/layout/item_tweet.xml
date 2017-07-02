@@ -77,7 +77,7 @@
         android:id="@+id/ibComment"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:backgroundTint="@color/white"
+        android:background="@android:color/transparent"
         android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_compose_dm"
         android:layout_below="@+id/ivImage"
@@ -88,9 +88,9 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_above="@+id/ivLine"
-        android:layout_marginLeft="20dp"
-        android:layout_toEndOf="@+id/ibComment"
-        android:backgroundTint="@color/white"
+        android:layout_marginLeft="15dp"
+        android:layout_toEndOf="@+id/tvComment"
+        android:background="@android:color/transparent"
         android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_retweet_stroke" />
 
@@ -98,25 +98,25 @@
         android:id="@+id/ibLike"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="20dp"
-        android:backgroundTint="@color/white"
-        android:paddingBottom="5dp"
-        app:srcCompat="@drawable/ic_vector_heart_stroke"
         android:layout_alignTop="@+id/ibMessage"
-        android:layout_toEndOf="@+id/ibRetweet"
-        android:layout_marginStart="24dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="24dp"
+        android:layout_toEndOf="@+id/tvRetweet"
+        android:background="@android:color/transparent"
+        android:paddingBottom="5dp"
+        app:srcCompat="@drawable/ic_vector_heart_stroke" />
 
     <ImageButton
         android:id="@+id/ibMessage"
         android:layout_width="35dp"
         android:layout_height="35dp"
-        android:layout_marginLeft="20dp"
-        android:backgroundTint="@color/white"
-        android:paddingBottom="5dp"
-        app:srcCompat="@drawable/ic_vector_messages_stroke"
         android:layout_above="@+id/ivLine"
-        android:layout_toEndOf="@+id/ibLike"
-        android:layout_marginStart="21dp" />
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="21dp"
+        android:layout_toEndOf="@+id/tvLike"
+        android:background="@android:color/transparent"
+        android:paddingBottom="5dp"
+        app:srcCompat="@drawable/ic_vector_messages_stroke" />
 
     <ImageView
         android:id="@+id/ivImage"
@@ -126,5 +126,39 @@
         android:layout_alignStart="@+id/tvBody"
         android:layout_below="@+id/tvBody"
         app:srcCompat="@android:color/transparent" />
+
+    <TextView
+        android:id="@+id/tvComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginLeft="3dp"
+        android:layout_toEndOf="@+id/ibComment"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvRetweet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivImage"
+        android:layout_toEndOf="@+id/ibRetweet"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_marginLeft="3dp"
+        android:layout_toEndOf="@+id/ibMessage"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivImage"
+        android:layout_toEndOf="@+id/ibLike"
+        android:text="TextView" />
 
 </RelativeLayout>
