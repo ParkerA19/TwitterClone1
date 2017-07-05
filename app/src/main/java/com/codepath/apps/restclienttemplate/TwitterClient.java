@@ -55,6 +55,30 @@ public class TwitterClient extends OAuthBaseClient {
 		client.get(apiUrl, params, handler);
 	}
 
+	public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("statuses/mentions_timeline.json");
+		// Can specify query string params directly or through RequestParams.
+		RequestParams params = new RequestParams();
+		params.put("count", 25);
+		params.put("since_id", 1);
+		client.get(apiUrl, params, handler);
+	}
+
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        // Can specify query string params directly or through RequestParams.
+        RequestParams params = new RequestParams();
+        params.put("screen_name", screenName);
+        params.put("count", 25);
+        client.get(apiUrl, params, handler);
+    }
+
+    public void getUserInfo(AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("account/verify_credentials.json");
+        // Can specify query string params directly or through RequestParams.
+        client.get(apiUrl, null, handler);
+    }
+
 	public void sendTweet(String message, AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("statuses/update.json");
 		// Can specify query string params directly or through RequestParams.
@@ -64,16 +88,16 @@ public class TwitterClient extends OAuthBaseClient {
 
 	}
 
-	public void likeTweet(int id, AsyncHttpResponseHandler handler) {
-		String apiUrl = "favorite/create.json";
+	public void likeTweet(long id, AsyncHttpResponseHandler handler) {
+		String apiUrl = "favorites/create.json";
 
 		RequestParams params = new RequestParams();
 		params.put("id",id);
 		client.post(apiUrl, params, handler);
 	}
 
-	public void unlikeTweet(int id, AsyncHttpResponseHandler handler) {
-		String apiUrl = "favorite/destroy.json";
+	public void unlikeTweet(long id, AsyncHttpResponseHandler handler) {
+		String apiUrl = "favorites/destroy.json";
 
 		RequestParams params = new RequestParams();
 		params.put("id", id);

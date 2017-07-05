@@ -25,6 +25,8 @@ public class Tweet {
     public String favortieCount;
     public String retweetCount;
     public String replyCount;
+    public String url;
+    public String displayUrl;
 
     // deserialize the JSON
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
@@ -52,6 +54,16 @@ public class Tweet {
                         tweet.imageUrl = object2.getString("media_url_https");
                     }
 
+                }
+            }
+            if (object.has("urls")) {
+                JSONArray urlArray = object.getJSONArray("urls");
+                if (urlArray.length() > 0) {
+                    JSONObject urlObject = urlArray.getJSONObject(0);
+                    if (urlObject.has("url") && urlObject.has("display_url")) {
+                        tweet.url = urlObject.getString("url");
+                        tweet.displayUrl = urlObject.getString("display_url");
+                    }
                 }
             }
 

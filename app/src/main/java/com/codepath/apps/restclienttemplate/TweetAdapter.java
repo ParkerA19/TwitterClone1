@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +15,17 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static com.codepath.apps.restclienttemplate.R.drawable.ic_vector_heart;
@@ -37,10 +42,19 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     List<Tweet> mTweets;
     Context context;
+    TwitterClient client;
+    private TweetAdapterListener mlistener;
+
+    // define an interface required by the viewholder
+    public interface TweetAdapterListener {
+        public void onItemSelected(View view, int position);
+    }
+
 
     // pass in the Tweets array in the constructor
-    public TweetAdapter(List<Tweet> tweets) {
+    public TweetAdapter(List<Tweet> tweets, TweetAdapterListener listener) {
         mTweets = tweets;
+        mlistener = listener;
     }
 
     // for each row, inflate the layout and cache references into ViewHolder
@@ -50,6 +64,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+        client = TwitterApp.getRestClient();
 
         View tweetView = inflater.inflate(R.layout.item_tweet, parent, false);
         ViewHolder viewHolder = new ViewHolder(tweetView);
@@ -81,15 +96,68 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
                 if (tweet.favorited) {
-                    tweet.favorited = false;
-                    // TODO; change color back to white
-                    holder.ibLike.setImageResource(ic_vector_heart_stroke);
+                    client.unlikeTweet(tweet.uid, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            tweet.favorited = false;
+                            // TODO; change color back to white
+                            holder.ibLike.setImageResource(ic_vector_heart_stroke);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.d("TwitterClient", responseString);
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+                    });
+
+
+
 
 
                 } else {
-                    tweet.favorited = true;
-                    // TODO; change color to red
-                    holder.ibLike.setImageResource(ic_vector_heart);
+                    client.likeTweet(tweet.uid, new JsonHttpResponseHandler() {
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            tweet.favorited = true;
+                            // TODO; change color to red
+                            holder.ibLike.setImageResource(ic_vector_heart);
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                            Log.d("TwitterClient", responseString);
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                            Log.d("TwitterClient", errorResponse.toString());
+                            throwable.printStackTrace();
+                        }
+                    });
+
+
                 }
             }
         });
@@ -142,15 +210,6 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     // create ViewHolder class
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-//        public ImageView ivProfileImage;
-//        public TextView tvUsername;
-//        public TextView tvBody;
-//        public TextView tvTime;
-//        public TextView tvScreenName;
-//        public ImageButton ibComment;
-//        public ImageButton ibLike;
-//        public ImageButton ibRetweet;
-//        public ImageButton ibMessage;
 
         @Nullable@BindView(R.id.ivProfileImage) ImageView ivProfileImage;
         @Nullable@BindView(R.id.ivImage) ImageView ivImage;
@@ -179,16 +238,17 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
             // perform findViewById lookups
 
-//            ibComment = (int) itemView.findViewById(R.id.ibComment);
-//            ibLike = (int) itemView.findViewById(R.id.ibLike);
-//            ibRetweet = (ImageButton) itemView.findViewById(R.id.ibRetweet);
-//            ibMessage = (ImageButton) itemView.findViewById(R.id.ibMessage);
-
-//            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-//            tvUsername = (TextView) itemView.findViewById(R.id.tvUserName);
-//            tvBody = (TextView) itemView.findViewById(R.id.tvBody);
-//            tvTime = (TextView) itemView.findViewById(R.id.tvTime);
-//            tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mlistener != null) {
+                        // get the position of row element
+                        int position = getAdapterPosition();
+                        // fire the listener callback
+                        mlistener.onItemSelected(view, position);
+                    }
+                }
+            });
         }
 
         @Override
