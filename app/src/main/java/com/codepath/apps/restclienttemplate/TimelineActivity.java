@@ -1,19 +1,19 @@
  package com.codepath.apps.restclienttemplate;
 
  import android.content.Intent;
- import android.os.Bundle;
- import android.support.design.widget.TabLayout;
- import android.support.v4.view.MenuItemCompat;
- import android.support.v4.view.ViewPager;
- import android.support.v7.app.AppCompatActivity;
- import android.view.Menu;
- import android.view.MenuItem;
- import android.widget.ProgressBar;
- import android.widget.Toast;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
- import com.codepath.apps.restclienttemplate.Fragments.TweetsListFragment;
- import com.codepath.apps.restclienttemplate.Fragments.TweetsPagerAdapter;
- import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.Fragments.TweetsListFragment;
+import com.codepath.apps.restclienttemplate.Fragments.TweetsPagerAdapter;
+import com.codepath.apps.restclienttemplate.models.Tweet;
 
  public class TimelineActivity extends AppCompatActivity implements TweetsListFragment.TweetSelectedListener{
 
@@ -53,24 +53,6 @@
 
 
    //      fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-
-
-//         swipeContainer = (SwipeRefreshLayout) findViewById(swipeContainer);
-//         // Setup refresh listener which triggers new data loading
-//         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//             @Override
-//             public void onRefresh() {
-//                 // Your code to refresh the list here.
-//                 // Make sure you call swipeContainer.setRefreshing(false)
-//                 // once the network request has completed successfully.
-//                 populateTimeline();
-//             }
-//         });
-//         // Configure the refreshing colors
-//         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-//                 android.R.color.holo_green_light,
-//                 android.R.color.holo_orange_light,
-//                 android.R.color.holo_red_light);
 
      }
 

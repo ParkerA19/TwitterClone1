@@ -22,7 +22,7 @@ public class Tweet {
     public String imageUrl;
     public boolean favorited;
     public boolean retweeted;
-    public String favortieCount;
+    public String favoriteCount;
     public String retweetCount;
     public String replyCount;
     public String url;
@@ -41,7 +41,7 @@ public class Tweet {
         tweet.time = TimeFormatter.getTimeDifference(tweet.createdAt);
         tweet.favorited = jsonObject.getBoolean("favorited");
         tweet.retweeted = jsonObject.getBoolean("retweeted");
-        tweet.favortieCount = jsonObject.getString("favorite_count");
+        tweet.favoriteCount = jsonObject.getString("favorite_count");
         tweet.retweetCount = jsonObject.getString("retweet_count");
     //    tweet.time = TimeFormatter.getTimeStamp(tweet.createdAt);
         if (jsonObject.has("entities")) {

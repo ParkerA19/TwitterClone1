@@ -88,7 +88,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         holder.tvTime.setText(tweet.time);
         holder.tvComment.setText("hey");
         holder.tvRetweet.setText(tweet.retweetCount);
-        holder.tvLike.setText(tweet.favortieCount);
+        holder.tvLike.setText(tweet.favoriteCount);
         holder.tvMessage.setText("hi");
         holder.ibLike.setImageResource(favorite);
         holder.ibRetweet.setImageResource(retweet);
@@ -100,9 +100,15 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            // set boolean to false
                             tweet.favorited = false;
-                            // TODO; change color back to white
+                            // set the new image
                             holder.ibLike.setImageResource(ic_vector_heart_stroke);
+                            // set the new favorites count
+                            tweet.favoriteCount = Integer.toString(Integer.parseInt(tweet.favoriteCount) - 1);
+                            // set the new text
+                            holder.tvLike.setText(tweet.favoriteCount);
+
                         }
 
                         @Override
@@ -133,9 +139,14 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                            // set boolean to true
                             tweet.favorited = true;
-                            // TODO; change color to red
+                            // set the new image
                             holder.ibLike.setImageResource(ic_vector_heart);
+                            // set the new favorites count
+                            tweet.favoriteCount = Integer.toString(Integer.parseInt(tweet.favoriteCount) + 1);
+                            // set the new text
+                            holder.tvLike.setText(tweet.favoriteCount);
                         }
 
                         @Override
@@ -194,12 +205,26 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 .into(holder.ivProfileImage);
 
         if (tweet.imageUrl != null) {
+            holder.ivImage.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(tweet.imageUrl)
                     .bitmapTransform(new RoundedCornersTransformation(context, 5, 0))
                     .into(holder.ivImage);
+        } else {
+            holder.ivImage.setVisibility(View.GONE);
         }
 
+        holder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // make a new intent
+                Intent intent = new Intent(context, ProfileActivity.class);
+                // add user into intent
+                intent.putExtra("user", Parcels.wrap(tweet.user));
+                // start activity
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -238,17 +263,17 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
             // perform findViewById lookups
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mlistener != null) {
-                        // get the position of row element
-                        int position = getAdapterPosition();
-                        // fire the listener callback
-                        mlistener.onItemSelected(view, position);
-                    }
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    if (mlistener != null) {
+//                        // get the position of row element
+//                        int position = getAdapterPosition();
+//                        // fire the listener callback
+//                        mlistener.onItemSelected(view, position);
+//                    }
+//                }
+//            });
         }
 
         @Override

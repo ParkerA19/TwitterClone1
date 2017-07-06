@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -23,11 +24,9 @@ public class DetailsActivity extends AppCompatActivity {
     // the tweet to display
     Tweet tweet;
 
-    @BindView(R.id.ivProfileImage)
-    ImageView ivProfileImage;
+    @Nullable@BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.tvBody) TextView tvBody;
-    @BindView(R.id.tvUserName)
-    TextView tvUserName;
+    @BindView(R.id.tvUserName) TextView tvUserName;
     @BindView(R.id.tvScreenName) TextView tvScreenName;
     @BindView(R.id.tvDate) TextView tvDate;
 

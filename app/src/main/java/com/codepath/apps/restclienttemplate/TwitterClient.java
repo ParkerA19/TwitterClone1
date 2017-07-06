@@ -89,7 +89,7 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
 	public void likeTweet(long id, AsyncHttpResponseHandler handler) {
-		String apiUrl = "favorites/create.json";
+		String apiUrl = getApiUrl("favorites/create.json");
 
 		RequestParams params = new RequestParams();
 		params.put("id",id);
@@ -97,7 +97,7 @@ public class TwitterClient extends OAuthBaseClient {
 	}
 
 	public void unlikeTweet(long id, AsyncHttpResponseHandler handler) {
-		String apiUrl = "favorites/destroy.json";
+		String apiUrl = getApiUrl("favorites/destroy.json");
 
 		RequestParams params = new RequestParams();
 		params.put("id", id);
