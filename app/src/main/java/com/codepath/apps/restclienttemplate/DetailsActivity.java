@@ -1,5 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -36,6 +39,8 @@ public class DetailsActivity extends AppCompatActivity {
     Tweet tweet;
     // twitter client
     TwitterClient client;
+    // Context
+    Context context;
 
     @Nullable@BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @Nullable@BindView(R.id.ivImage) ImageView ivImage;
@@ -59,6 +64,8 @@ public class DetailsActivity extends AppCompatActivity {
         // initialize the client
         clientA = new AsyncHttpClient();
         client = TwitterApp.getRestClient();
+
+        context = getApplicationContext();
 
         // unwrap the movie passed in the intent, using its simple name as a key
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
@@ -86,16 +93,28 @@ public class DetailsActivity extends AppCompatActivity {
         String url = tweet.imageUrl;
 
 
-        Glide.with(getApplicationContext())
+        Glide.with(context)
                 .load(imageUrl)
                 .bitmapTransform(new RoundedCornersTransformation(getApplicationContext(), 150, 0))
                 .into(ivProfileImage);
 
-        Glide.with(getApplicationContext())
+        Glide.with(context)
                 .load(url)
                 .bitmapTransform(new RoundedCornersTransformation(getApplicationContext(), 25, 0))
                 .into(ivImage);
 
+        ivProfileImage.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                // make intent
+                Intent intent = new Intent(context, ProfileActivity.class);
+                // add user to intent
+                intent.putExtra(User.class.getName(), Parcels.wrap(tweet.user));
+                // start activity
+                startActivity(intent);
+
+            }
+        });
 
         ibLike.setOnClickListener(new View.OnClickListener() {
             @Override

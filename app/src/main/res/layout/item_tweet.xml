@@ -60,19 +60,21 @@
         android:paddingBottom="10dp"
         android:text="TextView"
         android:autoLink="all"
+        android:background="@android:color/holo_green_light"
         android:textColor="@color/black"
         android:layout_below="@+id/tvUserName"
         android:layout_toEndOf="@+id/ivProfileImage" />
 
+
     <ImageView
-        android:id="@+id/ivLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/ibComment"
-        android:paddingBottom="2dp"
-        android:paddingTop="5dp"
-        app:srcCompat="@color/inline_action" />
+        android:id="@+id/ivImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/holo_red_dark"
+        android:layout_alignStart="@+id/tvBody"
+        android:layout_below="@+id/tvBody"
+        app:srcCompat="@android:color/transparent" />
 
     <ImageButton
         android:id="@+id/ibComment"
@@ -119,15 +121,6 @@
         android:paddingBottom="5dp"
         app:srcCompat="@drawable/ic_vector_messages_stroke" />
 
-    <ImageView
-        android:id="@+id/ivImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignStart="@+id/tvBody"
-        android:layout_below="@+id/tvBody"
-        app:srcCompat="@android:color/transparent" />
-
     <TextView
         android:id="@+id/tvComment"
         android:layout_width="wrap_content"
@@ -165,5 +158,15 @@
         android:layout_below="@+id/ivImage"
         android:layout_toEndOf="@+id/ibLike"
         android:text="TextView" />
+
+    <ImageView
+        android:id="@+id/ivLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/ibComment"
+        android:paddingBottom="2dp"
+        android:paddingTop="5dp"
+        app:srcCompat="@color/inline_action" />
 
 </RelativeLayout>

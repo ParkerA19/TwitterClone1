@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         String screenName;
-        user = Parcels.unwrap(getIntent().getParcelableExtra("user"));
+        user = Parcels.unwrap(getIntent().getParcelableExtra(User.class.getName()));
         if (user == null)
             screenName = getIntent().getStringExtra("screen_name");
         else

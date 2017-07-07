@@ -3,41 +3,79 @@ package com.codepath.apps.restclienttemplate;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ComposeActivity extends AppCompatActivity {
 
     // instance variables
     TwitterClient client;
-    EditText etTweet;
-    TextView tvCharacterCount;
+    User user;
+ //   EditText etTweet;
+ //   TextView tvCharacterCount;
+
+    @Nullable@BindView(R.id.ivProfileImage) ImageView ivProfileImage;
+    @BindView(R.id.tvCharacterCount) TextView tvCharacterCount;
+    @BindView(R.id.etTweet) EditText etTweet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compose);
+        ButterKnife.bind(this);
+
 
         // set the client
         client = TwitterApp.getRestClient();
 
+        client.getUserInfo(new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    user = User.fromJSON(response);
+
+                    Glide.with(getApplicationContext())
+                            .load(user.profileImageUrl)
+                            .bitmapTransform(new RoundedCornersTransformation(getApplicationContext(), 150, 0))
+                            .into(ivProfileImage);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("ComposeActivity", responseString);
+                throwable.printStackTrace();
+            }
+        });
+
         // set the edit text TODO: use ButterKnife
         etTweet = (EditText) findViewById(R.id.etTweet);
         tvCharacterCount = (TextView) findViewById(R.id.tvCharacterCount);
+
+
 
         updateCharacterCount();
 
@@ -102,7 +140,18 @@ public class ComposeActivity extends AppCompatActivity {
     }
 
     public void close(View V) {
+        // set the intent
         Intent intent = new Intent(ComposeActivity.this, TimelineActivity.class);
+        // start the intent
+        startActivity(intent);
+    }
+
+    public void onProfile(View V) {
+        // set the new intent
+        Intent intent = new Intent(ComposeActivity.this, ProfileActivity.class);
+        // populate the new intent
+        intent.putExtra(User.class.getName(), Parcels.wrap(user));
+        // start Activity
         startActivity(intent);
     }
 

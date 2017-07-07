@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -214,6 +215,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             holder.ivImage.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(tweet.imageUrl)
+                    .fitCenter()
                     .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
                     .into(holder.ivImage);
         } else {
@@ -227,7 +229,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                 // make a new intent
                 Intent intent = new Intent(context, ProfileActivity.class);
                 // add user into intent
-                intent.putExtra("user", Parcels.wrap(tweet.user));
+                intent.putExtra(User.class.getName(), Parcels.wrap(tweet.user));
                 // start activity
                 context.startActivity(intent);
             }
