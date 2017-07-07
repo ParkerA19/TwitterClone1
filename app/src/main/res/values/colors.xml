@@ -22,4 +22,6 @@
     <color name="primary_material_dark">#1da1f2</color>
     <color name="black">#000000</color>
     <color name="white">#fff</color>
+    <color name="light_grey">#A9A9A9</color>
+    <color name="button_grey">#808080</color>
 </resources>

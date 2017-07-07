@@ -57,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:paddingBottom="30dp"
+        android:paddingBottom="10dp"
         android:text="TextView"
         android:autoLink="all"
         android:textColor="@color/black"
@@ -133,6 +133,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="3dp"
         android:layout_toEndOf="@+id/ibComment"
         android:text="TextView" />
@@ -142,6 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
+        android:layout_marginTop="5dp"
         android:layout_toEndOf="@+id/ibRetweet"
         android:text="TextView" />
 
@@ -150,6 +152,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivImage"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="3dp"
         android:layout_toEndOf="@+id/ibMessage"
         android:text="TextView" />
@@ -158,6 +161,7 @@
         android:id="@+id/tvLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/ivImage"
         android:layout_toEndOf="@+id/ibLike"
         android:text="TextView" />
