@@ -92,7 +92,7 @@ public class ProfileActivity extends AppCompatActivity {
         // load the profile image with Glide
         Glide.with(this)
                 .load(user.profileImageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(this, 25, 0))
+                .bitmapTransform(new RoundedCornersTransformation(this, 150, 0))
                 .into(ivProfileImage);
     }
 }

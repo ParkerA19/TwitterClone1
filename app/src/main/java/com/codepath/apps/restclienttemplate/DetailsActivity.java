@@ -39,7 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
         // initialize the client
         client = new AsyncHttpClient();
 
-        // unwrap the movie passed in vie intent, using its simple name as a key
+        // unwrap the movie passed in the intent, using its simple name as a key
         tweet = (Tweet) Parcels.unwrap(getIntent().getParcelableExtra(Tweet.class.getSimpleName()));
         Log.d("DetailsActivity", String.format("Showing details for %s", tweet.body));
 
@@ -55,9 +55,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(imageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(getApplicationContext(), 25, 0))
-                //      .placeholder(placeholderId)
-                //      .error(placeholderId)
+                .bitmapTransform(new RoundedCornersTransformation(getApplicationContext(), 150, 0))
                 .into(ivProfileImage);
     }
 

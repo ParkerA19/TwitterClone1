@@ -81,14 +81,17 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         int favorite = (tweet.favorited) ? ic_vector_heart : ic_vector_heart_stroke;
         int retweet = (tweet.retweeted) ? ic_vector_retweet : ic_vector_retweet_stroke;
 
+        final String favString = (tweet.favoriteCount.equals("0")) ? "" : tweet.favoriteCount;
+        final String retString = (tweet.retweetCount.equals("0")) ? "" : tweet.retweetCount;
+
         // populate the views according to position
         holder.tvUsername.setText(tweet.user.name);
         holder.tvScreenName.setText("@" + tweet.user.screenName);
         holder.tvBody.setText(tweet.body);
         holder.tvTime.setText(tweet.time);
         holder.tvComment.setText("hey");
-        holder.tvRetweet.setText(tweet.retweetCount);
-        holder.tvLike.setText(tweet.favoriteCount);
+        holder.tvRetweet.setText(retString);
+        holder.tvLike.setText(favString);
         holder.tvMessage.setText("hi");
         holder.ibLike.setImageResource(favorite);
         holder.ibRetweet.setImageResource(retweet);
@@ -107,8 +110,10 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
                             // set the new favorites count
                             tweet.favoriteCount = Integer.toString(Integer.parseInt(tweet.favoriteCount) - 1);
                             // set the new text
-                            holder.tvLike.setText(tweet.favoriteCount);
-
+                            if (tweet.favoriteCount.equals("0"))
+                                holder.tvLike.setText(favString);
+                            else
+                                holder.tvLike.setText(tweet.favoriteCount);
                         }
 
                         @Override
@@ -198,22 +203,24 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 //        });
 
 //
-
+        // load in the profile image
         Glide.with(context)
                 .load(tweet.user.profileImageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
+                .bitmapTransform(new RoundedCornersTransformation(context, 150, 0))
                 .into(holder.ivProfileImage);
 
+        // load in the media image if there is one
         if (tweet.imageUrl != null) {
             holder.ivImage.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(tweet.imageUrl)
-                    .bitmapTransform(new RoundedCornersTransformation(context, 5, 0))
+                    .bitmapTransform(new RoundedCornersTransformation(context, 25, 0))
                     .into(holder.ivImage);
         } else {
             holder.ivImage.setVisibility(View.GONE);
         }
 
+        // set on click for the profile image to go to the profile activity
         holder.ivProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

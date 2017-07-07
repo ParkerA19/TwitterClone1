@@ -59,6 +59,7 @@
         android:layout_marginRight="10dp"
         android:paddingBottom="30dp"
         android:text="TextView"
+        android:autoLink="all"
         android:textColor="@color/black"
         android:layout_below="@+id/tvUserName"
         android:layout_toEndOf="@+id/ivProfileImage" />
