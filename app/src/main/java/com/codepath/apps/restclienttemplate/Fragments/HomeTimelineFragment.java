@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.codepath.apps.restclienttemplate.TwitterApp;
 import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
@@ -84,6 +85,15 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 throwable.printStackTrace();
             }
         });
+    }
+
+    public void appendTweet(Tweet tweet) {
+        // add a tweet
+        tweets.add(0, tweet);
+        // inserted at position 0
+        tweetAdapter.notifyItemInserted(0);
+        // do work
+        rvTweets.scrollToPosition(0);
     }
 
 }

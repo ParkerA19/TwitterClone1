@@ -1,19 +1,22 @@
  package com.codepath.apps.restclienttemplate;
 
  import android.content.Intent;
-import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+ import android.os.Bundle;
+ import android.support.design.widget.TabLayout;
+ import android.support.v4.view.MenuItemCompat;
+ import android.support.v4.view.ViewPager;
+ import android.support.v7.app.AppCompatActivity;
+ import android.view.Menu;
+ import android.view.MenuItem;
+ import android.widget.ProgressBar;
+ import android.widget.Toast;
 
-import com.codepath.apps.restclienttemplate.Fragments.TweetsListFragment;
-import com.codepath.apps.restclienttemplate.Fragments.TweetsPagerAdapter;
-import com.codepath.apps.restclienttemplate.models.Tweet;
+ import com.codepath.apps.restclienttemplate.Fragments.HomeTimelineFragment;
+ import com.codepath.apps.restclienttemplate.Fragments.TweetsListFragment;
+ import com.codepath.apps.restclienttemplate.Fragments.TweetsPagerAdapter;
+ import com.codepath.apps.restclienttemplate.models.Tweet;
+
+ import org.parceler.Parcels;
 
  public class TimelineActivity extends AppCompatActivity implements TweetsListFragment.TweetSelectedListener{
 
@@ -24,6 +27,8 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
 
      // Instance of the progress action-view
      MenuItem miActionProgressItem;
+
+     TweetsPagerAdapter adapterViewPager;
 
 
      static final int REQUEST_CODE = 1;
@@ -45,7 +50,8 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
          ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
 
          // set the adapter for the pager
-         vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
+         adapterViewPager = new TweetsPagerAdapter(getSupportFragmentManager(), this);
+         vpPager.setAdapter(adapterViewPager);
 
          // setup the TabLayout to use the view pager
          TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
@@ -102,16 +108,19 @@ import com.codepath.apps.restclienttemplate.models.Tweet;
           }
       }
 
-//      @Override
-//      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//
-//          if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-//              Tweet tweet = Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
+      @Override
+      protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+          if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
+              Tweet tweet = Parcels.unwrap(data.getParcelableExtra(Tweet.class.getName()));
 //              tweets.add(0, tweet);
 //              tweetAdapter.notifyItemInserted(0);
 //              rvTweets.scrollToPosition(0);
-//          }
-//      }
+              HomeTimelineFragment fragmentHomeTweets =
+                      (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+              fragmentHomeTweets.appendTweet(tweet);
+          }
+      }
 
 
       private void composeMessage() {
